@@ -15,6 +15,84 @@ except ImportError:
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.basic import env_fallback, missing_required_lib
 
+# https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_documenting.html#developing-modules-documenting
+DOCUMENTATION = r'''
+module: proxmox_kvm_info
+short_description: Retrieve informations about one or more virtual machines
+description:
+  - Retrieve informations about virtal machines in a Proxmox Virtual Environment.
+version_added: ...
+author: Judd Tracy
+options:
+  name:
+    description:
+      - Restrict results to the virtual machine with this name.
+  node:
+    description:
+      - Restrict results to virtual machines running on this specific node a proxmox cluster.
+  load_sections:
+    description:
+      - Gather additionnal informations.
+      - C(config) returns the virtual machine configuration with pending changes applied.
+      - C(snapshots) returns the list of snapshots.
+      - C(firewall) returns firewall configuration.
+      - C(agent_network_info) returns the list of network interfaces as seen by `qemu-guest-agent`.
+      - C(agent_os_info) returns OS informations as seen by `qemu-guest-agent`.
+    type: 'list'
+    default: ['config']
+    elements: 'str'
+  type:
+    description:
+      - Currently unimplemented.
+  vmid:
+    description:
+      - Restrict results to the virtual machine with this vmid.
+requirements:
+  - proxmoxer
+  - requests
+seealso:
+  - module: community.general.proxmox
+  - module: community.general.proxmox_kvm
+  - module: community.general.proxmox_template
+notes:
+  - The installation of qemu-guest-agent on target virtual machines is necessaryfor C(load_sections: ['agent_network_info', 'agent_os_info']) to work.
+'''
+
+EXAMPLES = r'''
+- name: Retrieve data on node prx-node-01
+  proxmox_kvm_info:
+    api_host: proxmox.example.org
+    api_user: root@pam
+    api_password: super
+    node: prx-node-01
+  register: node_info
+
+- name: Retrieve data on vm menhir
+  proxmox_kvm_info:
+    api_host: proxmox.example.org
+    api_user: root@pam
+    api_password: super
+    name: menhir
+  register: name_info
+
+- name: Retrieve data on vmid 113
+  proxmox_kvm_info:
+    api_host: proxmox.example.org
+    api_user: root@pam
+    api_password: super
+    vmid: 113
+  register: vmid_info
+
+- name: Retrieve firewall configuration on vm dolmen
+  proxmox_kvm_info:
+    api_host: proxmox.example.org
+    api_user: root@pam
+    api_password: super
+    name: dolmen
+    load_sections: ['firewall']
+  register: firewall_info
+'''
+
 class ProxmoxAnsible:
     def __init__(self, module):
         self.proxmox_api = self._connnect(module)
