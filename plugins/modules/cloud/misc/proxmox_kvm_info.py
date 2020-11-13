@@ -24,6 +24,20 @@ description:
 version_added: ...
 author: Judd Tracy
 options:
+  api_host:
+    description:
+      - Specify the target host of the Proxmox VE cluster.
+      - You can use C(PROXMOX_HOST) environment variable.
+    required: true
+  api_user:
+    description:
+      - Specify the user to authenticate with.
+      - You can use C(PROXMOX_USER) environment variable.
+    required: true
+  api_password:
+    description:
+      - Specify the password to authenticate with.
+      - You can use C(PROXMOX_PASSWORD) environment variable.
   name:
     description:
       - Restrict results to the virtual machine with this name.
@@ -44,6 +58,11 @@ options:
   type:
     description:
       - Currently unimplemented.
+  validate_certs:
+    description:
+      - If C(no), SSL certificates will not be validated. This should only be used on personally controlled sites using self-signed certificates.
+    type: bool
+    default: 'no'
   vmid:
     description:
       - Restrict results to the virtual machine with this vmid.
