@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+__future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
 import os
 import re
 import traceback
