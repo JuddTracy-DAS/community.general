@@ -44,9 +44,11 @@ options:
   name:
     description:
       - Restrict results to the virtual machine with this name.
+      - Mutually exclusive with I(node) and I(vmid).
   node:
     description:
       - Restrict results to virtual machines running on this specific node a proxmox cluster.
+      - Mutually exclusive with I(name) and I(vmid).
   load_sections:
     description:
       - Gather additionnal informations.
@@ -60,7 +62,10 @@ options:
     elements: 'str'
   type:
     description:
-      - Currently unimplemented.
+      - Retrieve information about VMs, Templates or both.
+    type: 'str'
+    choices: ['all', 'vm', 'template']
+    default: 'vm'
   validate_certs:
     description:
       - If C(no), SSL certificates will not be validated. This should only be used on personally controlled sites using self-signed certificates.
@@ -69,6 +74,7 @@ options:
   vmid:
     description:
       - Restrict results to the virtual machine with this vmid.
+      - Mutually exclusive with I(name) and I(node).
 requirements:
   - proxmoxer
   - requests
