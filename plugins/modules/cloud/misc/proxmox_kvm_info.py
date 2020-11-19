@@ -88,7 +88,7 @@ notes:
 
 EXAMPLES = r'''
 - name: Retrieve data on node prx-node-01
-  proxmox_kvm_info:
+  community.general.proxmox_kvm_info:
     api_host: proxmox.example.org
     api_user: root@pam
     api_password: super
@@ -96,7 +96,7 @@ EXAMPLES = r'''
   register: node_info
 
 - name: Retrieve data on vm menhir
-  proxmox_kvm_info:
+  community.general.proxmox_kvm_info:
     api_host: proxmox.example.org
     api_user: root@pam
     api_password: super
@@ -104,7 +104,7 @@ EXAMPLES = r'''
   register: name_info
 
 - name: Retrieve data on vmid 113
-  proxmox_kvm_info:
+  community.general.proxmox_kvm_info:
     api_host: proxmox.example.org
     api_user: root@pam
     api_password: super
@@ -112,7 +112,7 @@ EXAMPLES = r'''
   register: vmid_info
 
 - name: Retrieve firewall configuration on vm dolmen
-  proxmox_kvm_info:
+  community.general.proxmox_kvm_info:
     api_host: proxmox.example.org
     api_user: root@pam
     api_password: super
